@@ -1,11 +1,41 @@
-gh-pages<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://4a76-14-231-133-185.ngrok-free.app">
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Login Demo</title>
+    <script src="https://sdk.tiktok.com/js/tiktok-login.js"></script>
 </head>
 <body>
-    <p>自動でリダイレクトされない場合は、<a href="https://4a76-14-231-133-185.ngrok-free.app">このリンク</a>をクリックしてください。.</p>
+    <h1>Đăng nhập với TikTok</h1>
+    <button onclick="initiateTikTokLogin()">Đăng nhập</button>
+    <div id="result"></div>
+
+    <script>
+        // Thay thế bằng Client Key của ứng dụng TikTok của bạn
+        const clientKey = 'YOUR_CLIENT_KEY';
+
+        // Khởi tạo TikTok Login Kit
+        TikTokLogin.init({
+            clientKey: clientKey,
+            redirectUri: 'https://4a76-14-231-133-185.ngrok-free.app/callback', // Thay bằng URL ngrok của bạn
+            scope: 'user.info.basic', // Phạm vi quyền yêu cầu
+        });
+
+        // Hàm khởi tạo đăng nhập
+        function initiateTikTokLogin() {
+            TikTokLogin.login();
+        }
+
+        // Xử lý callback sau khi đăng nhập
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if (code) {
+                document.getElementById('result').innerText = 'Mã xác thực: ' + code;
+                // Gửi mã này đến server của bạn để đổi lấy access token
+            }
+        };
+    </script>
 </body>
 </html>
